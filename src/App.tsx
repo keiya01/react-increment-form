@@ -1,32 +1,9 @@
-import React, { useState, useCallback, ReactElement, useRef } from 'react';
-import { useForm, Control } from 'react-hook-form';
+import React, { useState, useCallback, useRef } from 'react';
+import { useForm } from 'react-hook-form';
 import './App.css';
-
-type FormValue = Record<string, string>;
-
-interface InputListProps {
-  inputCount: number;
-  register: Control['register'];
-}
-const InputList = ({inputCount, register}: InputListProps): ReactElement => (
-  <>
-    {[...new Array(inputCount)].map((_, i) => <input key={i} name={`${i}`} ref={register} className="input" />)}
-  </>
-);
-
-interface ResultProps {
-  values: FormValue | null;
-}
-const Result = ({ values }: ResultProps): ReactElement | null => 
-    values
-    ?
-    <div className="result-container">
-      <h1 className="title">Your input values</h1>
-      <ul>
-        {Object.keys(values).map((key, i) => (<li key={i}>{values[key]}</li>))}
-      </ul>
-    </div>
-  : null;
+import { InputList } from './InputList';
+import { Result } from './Result';
+import { FormValue } from './types/formValue';
 
 function App() {
   const { register, handleSubmit } = useForm<FormValue>();
@@ -45,7 +22,7 @@ function App() {
     <div className="container">
       <form className="form">
         <h1 className="title">Enter something</h1>
-        <InputList inputCount={inputCount} register={register}/>
+        <InputList inputCount={inputCount} ref={register}/>
         <button type="button" className="plus-button" onClick={handleOnClick} aria-label="add form">+</button>
         <button type="button" className="submit-button" onClick={handleSubmit(handleOnSubmit)}>submit</button>
       </form>
