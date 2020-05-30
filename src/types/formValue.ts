@@ -1,1 +1,6 @@
-export type FormValue = Record<string, any>;
+export type FormValue = { 
+  input: string[],
+  name: string,
+  email: string,
+  phoneNumber: number,
+};
